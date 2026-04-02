@@ -1,0 +1,38 @@
+{% extends 'base.html' %} 
+{% block content %}
+
+<div class="container">  
+    <form action="">
+        <div class="mb-3">
+            <label for="searchMovie" class="form-label">
+                🎬 Recomiéndame una película:
+            </label>
+            <input type="text" class="form-control" name="searchMovie" placeholder="Ej: Película de la segunda guerra mundial" value="{{ searchTerm|default_if_none:'' }}" />
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar Recomendación</button>
+    </form>   
+    <p>Buscando: {{searchTerm}}</p> 
+
+    {% if best_movie %}
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col">
+            <div class="card">
+                <img src="{{ best_movie.image.url }}" class="card-img-top" alt="{{ best_movie.title }}">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">{{ best_movie.title }}</h5>
+                    <p class="card-text">{{ best_movie.description }}</p>
+                    <p class="card-text">{{ best_movie.genre }}</p>
+                    <p class="card-text">{{ best_movie.year }}</p>
+                    <p class="card-text"><small class="text-muted">Similitud: {{ similarity }}</small></p>
+                    {% if best_movie.url %}
+                         <a href="{{ best_movie.url }}" class="btn btn-primary">Movie Link</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>    
+    </div>
+    {% endif %}
+
+</div>
+
+{% endblock content %}
